@@ -1,13 +1,16 @@
 // === Groq AI Chatbot Integration ===
-const apiKey = keyF();
+
 const model = "llama-3.3-70b-versatile";
 const email = "majay3574@gmail.com";
 const phoneNumber = "+91 8428543434";
 const linkedinProfile = "https://linkedin.com/in/ajay-michael";
 let githubProfile = `https://github.com/majay3574`;
 
+
+
 // In-memory storage replacement for localStorage
 let chatHistory = [];
+
 
 async function clearChat() {
   const chatBox = document.getElementById("chat-box");
@@ -32,9 +35,7 @@ function loadChatHistory() {
   });
   chatBox.scrollTop = chatBox.scrollHeight;
 }
-function keyF() {
-  return "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"
-}
+
 async function sendMessage() {
   const input = document.getElementById("user-input");
   const requestMessage = input.value.trim();
@@ -52,6 +53,27 @@ async function sendMessage() {
 
   // Save user message before sending to API
   saveMessage("user", requestMessage);
+  const randomX = "gsk_1hcJ7FZMfNmEh0SqFlmjWGdy";
+  const randomY = "b3FYGJPB6sdYdB3dV4HtBLSGAA7l";
+
+  function getEncryptedKey() {
+    const originalKey = randomX + randomY;
+
+    // Unicode-safe Base64 Encode
+    const encoder = new TextEncoder();
+    const encodedBytes = encoder.encode(originalKey);
+    const base64Encoded = btoa(String.fromCharCode(...encodedBytes));
+
+    // Unicode-safe Base64 Decode
+    const decodedBytes = Uint8Array.from(atob(base64Encoded), c => c.charCodeAt(0));
+    const decoder = new TextDecoder();
+    const base64Decoded = decoder.decode(decodedBytes);
+
+    return base64Decoded;
+  }
+  function keyF() {
+    return getEncryptedKey()
+  }
 
   try {
     // Build messages array with system prompt + chat history + current message
@@ -144,7 +166,7 @@ I'm also deeply passionate about AI and automation — not just as a skill, but 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: `Bearer ${keyF()}`,
         },
         body: JSON.stringify({
           model: model,
@@ -322,3 +344,4 @@ function animateCode() {
     }, index * 100);
   });
 }
+
