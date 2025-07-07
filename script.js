@@ -1,5 +1,5 @@
 // === Groq AI Chatbot Integration ===
-const apiKey = "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";
+const apiKey = keyF();
 const model = "llama-3.3-70b-versatile";
 const email = "majay3574@gmail.com";
 const phoneNumber = "+91 8428543434";
@@ -32,7 +32,9 @@ function loadChatHistory() {
   });
   chatBox.scrollTop = chatBox.scrollHeight;
 }
-
+function keyF() {
+  return "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"
+}
 async function sendMessage() {
   const input = document.getElementById("user-input");
   const requestMessage = input.value.trim();
