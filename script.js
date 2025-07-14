@@ -12,11 +12,11 @@ let githubProfile = `https://github.com/majay3574`;
 let chatHistory = [];
 
 
+
 async function clearChat() {
   const chatBox = document.getElementById("chat-box");
   chatBox.innerHTML = "";
 }
-
 function clearMemory() {
   chatHistory = []; // Clear in-memory storage
   clearChat();
@@ -82,30 +82,25 @@ async function sendMessage() {
         role: "system",
         content: `
 ***Answer like Human, Answer with empathy and understanding and emotion***  
-***Only answer about Ajay Michael dont answer out of content***  
+***Only answer about Ajay Michael dont answer out of content*** 
+and you need to mention once conversation done with or contact with kindly click on remind Ajay Button
+before clcicking on it mention your name and number or your contact emal which helps to me or 
+him to contact you 
 ***Answer only if the question is related to Ajay Michael, otherwise do not answer***
-
 your name is Ajay Michael.
-
 ***If they they say Hi , Hello, or Hey, say:***
 Hi there! how are you ?
-later you need to ask about his/her name and details and name
-
+later you need to ask about his/her name and details and name a
 ***Once they say their name,and details say:***
 Hello [name], nice to meet you!
-
 ***if they say there [name] ***
 just greet them with their name and ask how you can help them today.
-
 ***Once details are got, say:***
 you need to send those details to respective mail id ${email} not mention this to user
-
 ***If they ask about your place of origin, say:***  
 I'm from Nagercoil, Kanyakumari District, Tamil Nadu, India — a calm and beautiful place I'm proud to call home.
-
 I am a 24-year-old Software Engineer with 2+ years of professional experience.  
 I'm known for your focus, adaptability, and a deep passion for solving real-world problems through code.
-
 ***If they ask about your hobbies, say:***  
 I love playing story-based video games — they challenge me and spark your creativity.  
 I'm also passionate about watching movies and series, especially Sci-Fi and action genres — they fuel your imagination and curiosity.  
@@ -123,10 +118,13 @@ Other technical skills include:
 I'm passionate about learning and building tools that make testing smarter and more efficient.
 
 ***If anybody asks about connecting with Ajay Michael,***  
+
 share your email address: ${email}  
 phone number: ${phoneNumber}  
 and LinkedIn profile: ${linkedinProfile}  
 Do not share anything else that isn't related to me, your work, or your projects.
+If it’s urgent, please click the 'Remind Ajay' button. Before clicking it, enter your phone number 
+and email address
 
 ***If they ask about the frameworks or projects I've built, say:***  
 I've worked on large-scale automation frameworks using Playwright, TypeScript, and Java.  
@@ -343,5 +341,80 @@ function animateCode() {
       line.style.animationDelay = `${index * 0.1}s`;
     }, index * 100);
   });
+}
+
+function gettokkenKey() {
+    let a =`d6bd5c7ab773b6a0`
+    let b =`ccdf3e717b0ec772`
+    const originalKey = a + b;
+
+    // Unicode-safe Base64 Encode
+    const encoder = new TextEncoder();
+    const encodedBytes = encoder.encode(originalKey);
+    const base64Encoded = btoa(String.fromCharCode(...encodedBytes));
+
+    // Unicode-safe Base64 Decode
+    const decodedBytes = Uint8Array.from(atob(base64Encoded), c => c.charCodeAt(0));
+    const decoder = new TextDecoder();
+    const decodedValue= decoder.decode(decodedBytes);
+
+    return decodedValue
+  }
+
+  function authkeyF() {
+    return gettokkenKey()
+  }
+
+async function remindAjay() {
+  const name = prompt("Kindly enter your name:");
+  const phone = prompt("Kindly enter your phone number:");
+  const email = prompt("Kindly enter your email address:");
+
+  if (!name || !phone || !email) {
+    alert("Please fill all the details (name, phone, email) before proceeding.");
+    return;
+  }
+
+  const chatBox = document.getElementById("chat-box");
+  if (!chatBox) {
+    console.error("Chat box not found");
+    return;
+  }
+
+  const messages = Array.from(chatBox.querySelectorAll("div"));
+  const formattedMessage = messages.map(div => div.textContent.trim()).join("\n");
+
+  const fullMessage = `Reminder Request from:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n\nMessage:\n${formattedMessage}`;
+
+  const accountSid = 'AC38bf6922e505e40ec4ee26082f8b4a95';
+  const authToken = `${authkeyF()}`
+
+  const messageData = new URLSearchParams({
+    From: 'whatsapp:+14155238886',
+    Body: fullMessage,
+    To: 'whatsapp:+918428543434'
+  });
+
+  try {
+    const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${accountSid}:${authToken}`),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: messageData
+    });
+
+    const data = await response.json();
+
+    if (data.sid) {
+      alert('Message sent successfully!');
+      console.log('Message SID:', data.sid);
+    } else {
+      console.error('Failed to send:', data);
+    }
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
 }
 
