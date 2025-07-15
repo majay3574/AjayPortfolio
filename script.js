@@ -375,6 +375,17 @@ function gettokkenKey() {
 function authkeyF() {
   return gettokkenKey()
 }
+function isValidName(name) {
+  return /^[A-Za-z\s]+$/.test(name.trim());
+}
+
+function isValidPhone(phone) {
+  return /^[6-9]\d{9}$/.test(phone.trim());
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
 
 async function remindAjay() {
   const name = prompt("Kindly enter your name:");
@@ -386,11 +397,30 @@ async function remindAjay() {
     return;
   }
 
+  if (!isValidName(name)) {
+    alert("❌ Invalid name. Please use letters and spaces only.");
+    return;
+  }
+
+  if (!isValidPhone(phone)) {
+    alert("❌ Invalid phone number. Please enter a valid 10-digit number starting with 6-9.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    alert("❌ Invalid email address. Please enter a valid email format.");
+    return;
+  }
+
   const chatBox = document.getElementById("chat-box");
   if (!chatBox) {
     console.error("Chat box not found");
     return;
   }
+
+  const confirmation = document.createElement("div");
+  confirmation.textContent = `🤖: Reminder set! Name: ${name}, Phone: ${phone}, Email: ${email}`;
+  chatBox.appendChild(confirmation);
 
   const messages = Array.from(chatBox.querySelectorAll("div"));
   const formattedMessage = messages.map(div => div.textContent.trim()).join("\n");
