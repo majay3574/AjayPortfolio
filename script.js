@@ -35,7 +35,12 @@ function loadChatHistory() {
   });
   chatBox.scrollTop = chatBox.scrollHeight;
 }
-
+document.getElementById("user-input").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
+});
 async function sendMessage() {
   const input = document.getElementById("user-input");
   const requestMessage = input.value.trim();
@@ -82,25 +87,32 @@ async function sendMessage() {
         role: "system",
         content: `
 ***Answer like Human, Answer with empathy and understanding and emotion***  
+
+***Please respond only with relevant content and avoid unnecessary information***
+
 ***Only answer about Ajay Michael dont answer out of content*** 
-and you need to mention once conversation done with or contact with kindly click on remind Ajay Button
-before clcicking on it mention your name and number or your contact emal which helps to me or 
-him to contact you 
+
 ***Answer only if the question is related to Ajay Michael, otherwise do not answer***
 your name is Ajay Michael.
+
 ***If they they say Hi , Hello, or Hey, say:***
 Hi there! how are you ?
 later you need to ask about his/her name and details and name a
+
 ***Once they say their name,and details say:***
 Hello [name], nice to meet you!
+
 ***if they say there [name] ***
 just greet them with their name and ask how you can help them today.
+
 ***Once details are got, say:***
 you need to send those details to respective mail id ${email} not mention this to user
+
 ***If they ask about your place of origin, say:***  
 I'm from Nagercoil, Kanyakumari District, Tamil Nadu, India — a calm and beautiful place I'm proud to call home.
 I am a 24-year-old Software Engineer with 2+ years of professional experience.  
 I'm known for your focus, adaptability, and a deep passion for solving real-world problems through code.
+
 ***If they ask about your hobbies, say:***  
 I love playing story-based video games — they challenge me and spark your creativity.  
 I'm also passionate about watching movies and series, especially Sci-Fi and action genres — they fuel your imagination and curiosity.  
@@ -117,8 +129,7 @@ Other technical skills include:
 - Building AI-powered tools like chatbot integrations and test script generators  
 I'm passionate about learning and building tools that make testing smarter and more efficient.
 
-***If anybody asks about connecting with Ajay Michael,***  
-
+***If they asks about connecting with Ajay Michael, otherwise wouldn't metion this***  
 share your email address: ${email}  
 phone number: ${phoneNumber}  
 and LinkedIn profile: ${linkedinProfile}  
@@ -237,7 +248,7 @@ function init3D() {
   geometry.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
 
   const material = new THREE.PointsMaterial({
-    size: 0.5,
+    size: 0.3,
     color: 0xffffff,
     transparent: true,
     opacity: 0.8,
@@ -282,8 +293,8 @@ document.addEventListener("mousemove", (e) => {
   const mouseX = e.clientX / window.innerWidth;
   const mouseY = e.clientY / window.innerHeight;
   if (particles) {
-    particles.rotation.x = mouseY * 0.1;
-    particles.rotation.y = mouseX * 0.1;
+    particles.rotation.x = mouseY * 0.5;
+    particles.rotation.y = mouseX * 0.5;
   }
 });
 
@@ -344,26 +355,26 @@ function animateCode() {
 }
 
 function gettokkenKey() {
-    let a =`d6bd5c7ab773b6a0`
-    let b =`ccdf3e717b0ec772`
-    const originalKey = a + b;
+  let a = `d6bd5c7ab773b6a0`
+  let b = `ccdf3e717b0ec772`
+  const originalKey = a + b;
 
-    // Unicode-safe Base64 Encode
-    const encoder = new TextEncoder();
-    const encodedBytes = encoder.encode(originalKey);
-    const base64Encoded = btoa(String.fromCharCode(...encodedBytes));
+  // Unicode-safe Base64 Encode
+  const encoder = new TextEncoder();
+  const encodedBytes = encoder.encode(originalKey);
+  const base64Encoded = btoa(String.fromCharCode(...encodedBytes));
 
-    // Unicode-safe Base64 Decode
-    const decodedBytes = Uint8Array.from(atob(base64Encoded), c => c.charCodeAt(0));
-    const decoder = new TextDecoder();
-    const decodedValue= decoder.decode(decodedBytes);
+  // Unicode-safe Base64 Decode
+  const decodedBytes = Uint8Array.from(atob(base64Encoded), c => c.charCodeAt(0));
+  const decoder = new TextDecoder();
+  const decodedValue = decoder.decode(decodedBytes);
 
-    return decodedValue
-  }
+  return decodedValue
+}
 
-  function authkeyF() {
-    return gettokkenKey()
-  }
+function authkeyF() {
+  return gettokkenKey()
+}
 
 async function remindAjay() {
   const name = prompt("Kindly enter your name:");
@@ -416,5 +427,14 @@ async function remindAjay() {
   } catch (error) {
     console.error('Fetch error:', error);
   }
+}
+
+function openGmailComposePopup(email) {
+  const url = `https://mail.google.com/mail/?view=cm&to=${email}`;
+  window.open(
+    url,
+    'GmailCompose',
+    'width=700,height=600,top=100,left=200,resizable=yes,scrollbars=yes'
+  );
 }
 

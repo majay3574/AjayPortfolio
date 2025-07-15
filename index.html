@@ -18,14 +18,15 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-content">
-            <div class="logo" >AJAY MICHAEL</div>
+            <div class="logo">AJAY MICHAEL</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#hoveronhere">Chat with Michael</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#chat">Chat with Michael</a></li>
+
             </ul>
         </div>
     </nav>
@@ -48,6 +49,26 @@
                 innovation in every test I write.
             </p>
             <a href="#about" class="cta-button" style="background-image: url('./img2.jpg');">Explore My Work</a>
+        </div>
+    </section>
+
+    <section>
+        <div id="chat">
+            <div class="chat-container">
+                <div id="hoveronhere">
+                    <h2 class="bg-text">Chat with Michael</h2><br>
+                    <div class="input-area">
+                        <input type="text" id="user-input" placeholder="Ask Questions to Michael" />
+                        <button onclick="sendMessage()" style="background-image: url('./img2.jpg');">Send</button>
+                        <button onclick="clearChat()" style="background-image: url('./img2.jpg');">Clear</button>
+                        <button onclick="remindAjay()" style="background-image: url('./img2.jpg');">Remind Ajay</button>
+                    </div>
+                </div>
+                <div id="chat-box" class="chat-box"></div>
+                <div class="chat-header">
+
+                </div>
+            </div>
         </div>
     </section>
 
@@ -125,7 +146,7 @@
         <h2 class="section-title" style="background-image: url('./img2.jpg');">Featured Projects</h2>
         <div class="projects-grid">
             <div class="project-card">
-                <h3 class="project-title" >E-commerce Test Suite</h3>
+                <h3 class="project-title">E-commerce Test Suite</h3>
                 <p class="project-description">Comprehensive Playwright-based testing framework covering user journeys,
                     payment flows, and inventory management with 95% test coverage.</p>
                 <div class="project-tech">
@@ -162,29 +183,35 @@
 
     <!-- Contact Section -->
     <section id="contact" class="section scroll-animate">
+        <style>
+            #contact a {
+                color: #ffffff;
+                /* White link text */
+                text-decoration: none;
+                /* No underline */
+            }
+
+            #contact a:hover {
+                color: #db6607;
+                /* Light blue on hover */
+                text-decoration: underline;
+                /* Optional: underline on hover */
+            }
+        </style>
         <h2 class="section-title" style="background-image: url('./img2.jpg');">Get In Touch</h2>
+
         <div class="contact-grid">
-            <div class="contact-info">
+            <!-- Left Column -->
+            <div class="contact-column">
                 <div class="contact-item">
                     <div class="contact-icon" style="background-image: url('./img2.jpg');">📧</div>
                     <div class="contact-text">
                         <h3>Email</h3>
-                        <p>majay3574@gmail.com</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon" style="background-image: url('./img2.jpg');">💼</div>
-                    <div class="contact-text">
-                        <h3>LinkedIn</h3>
-                        <h4>Ajay Michael</h4>
-                        <p><a href="https://linkedin.com/in/ajay-michael"  target="_blank">linkedin.com/in/ajay-michael</a></p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon" style="background-image: url('./img2.jpg');">🐙</div>
-                    <div class="contact-text">
-                        <h3>GitHub</h3>
-                        <p><a href="https://github.com/majay3574" target="_blank">github.com/majay3574</a></p>
+                        <p>
+                            <a href="#" onclick="openGmailComposePopup('majay3574@gmail.com')">
+                                majay3574@gmail.com
+                            </a>
+                        </p>
                     </div>
                 </div>
                 <div class="contact-item">
@@ -195,22 +222,36 @@
                     </div>
                 </div>
             </div>
-            <div id="chat">
-                <div class="chat-container">
-                    <h2 class="bg-text">Chat with Michael</h2><br>
-                    <div class="input-area">
-                        <input type="text" id="user-input" placeholder="Ask Questions to Michael" />
-                        <button onclick="sendMessage()" style="background-image: url('./img2.jpg');">Send</button>
-                        <button onclick="clearChat()" style="background-image: url('./img2.jpg');">Clear</button>
-                        <button onclick="remindAjay()" style="background-image: url('./img2.jpg');">Remind Ajay</button>
-                    </div>
-                    <div id="chat-box" class="chat-box"></div>
-                    <div class="chat-header">
 
+            <!-- Right Column -->
+            <div class="contact-column">
+                <div class="contact-item">
+                    <div class="contact-icon" style="background-image: url('./img2.jpg');">💼</div>
+                    <div class="contact-text">
+                        <h3>LinkedIn</h3>
+                        <p>
+                            <a href="https://linkedin.com/in/ajay-michael" target="_blank">
+                                linkedin.com/in/ajay-michael
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon" style="background-image: url('./img2.jpg');">🐙</div>
+                    <div class="contact-text">
+                        <h3>GitHub</h3>
+                        <p>
+                            <a href="https://github.com/majay3574" target="_blank">
+                                github.com/majay3574
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+
 
 
     <script src="./script.js"></script>
