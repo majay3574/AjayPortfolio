@@ -431,7 +431,7 @@ async function remindAjay() {
   const authToken = `${authkeyF()}`
 
   const messageData = new URLSearchParams({
-    From: 'whatsapp:+14155238886',
+    From: 'whatsapp:+12179064752',
     Body: fullMessage,
     To: 'whatsapp:+918428543434'
   });
