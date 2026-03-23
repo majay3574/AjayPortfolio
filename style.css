@@ -5,6 +5,8 @@
     --accent: #d46a1f;
     --accent-2: #1b7c77;
     --accent-3: #2a3d4f;
+    --neon-blue: #4A90FF;
+    --neon-purple: #9B4DFF;
     --surface: #ffffff;
     --surface-2: #f1e8dc;
     --border: #e6d9c9;
@@ -166,7 +168,7 @@ h3 {
     bottom: 0;
     width: 0;
     height: 2px;
-    background: var(--accent);
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
     transition: width 0.3s ease;
 }
 
@@ -196,17 +198,19 @@ h3 {
 }
 
 .eyebrow-highlight {
-    color: var(--accent);
-    background: rgba(212, 106, 31, 0.1);
+    color: var(--neon-blue);
+    background: rgba(74, 144, 255, 0.1);
     padding: 0.1em 0.5em;
     border-radius: 999px;
-    border: 1px solid rgba(212, 106, 31, 0.25);
+    border: 1px solid rgba(74, 144, 255, 0.3);
+    text-shadow: 0 0 8px rgba(74, 144, 255, 0.4);
 }
 
 .eyebrow-highlight--teal {
-    color: var(--accent-2);
-    background: rgba(27, 124, 119, 0.1);
-    border-color: rgba(27, 124, 119, 0.25);
+    color: var(--neon-purple);
+    background: rgba(155, 77, 255, 0.1);
+    border-color: rgba(155, 77, 255, 0.3);
+    text-shadow: 0 0 8px rgba(155, 77, 255, 0.4);
 }
 
 .eyebrow-divider {
@@ -221,7 +225,10 @@ h3 {
 
 .hero-title em {
     font-style: italic;
-    color: var(--accent);
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-lead {
@@ -250,9 +257,10 @@ h3 {
 }
 
 .button.primary {
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
     color: #fff;
-    box-shadow: 0 18px 35px rgba(212, 106, 31, 0.25);
+    box-shadow: 0 18px 35px rgba(74, 144, 255, 0.3);
+    border: none;
 }
 
 .button.primary:hover {
@@ -350,6 +358,10 @@ h3 {
 .stat-value {
     font-size: 2rem;
     font-weight: 600;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .stat-label {
@@ -436,7 +448,10 @@ h3 {
 
 .step-number {
     font-weight: 600;
-    color: var(--accent);
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 0.5rem;
 }
 
@@ -768,9 +783,11 @@ details p {
     transform: translateY(0);
 }
 
+/* ── Tablet (≤ 900px) ── */
 @media (max-width: 900px) {
     .nav-inner {
         flex-wrap: wrap;
+        padding: 0.8rem 1.5rem;
     }
 
     .nav-toggle {
@@ -792,44 +809,177 @@ details p {
     }
 
     .hero {
-        padding-top: 6.5rem;
+        padding-top: 5.5rem;
+        padding-bottom: 3rem;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
     .hero-card {
         order: -1;
+        max-width: 480px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 6vw, 3rem);
+    }
+
+    .hero-lead {
+        font-size: 1rem;
     }
 
     .cta-row {
         flex-direction: column;
         align-items: stretch;
     }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-@media (max-width: 600px) {
+/* ── Mobile (≤ 480px) ── */
+@media (max-width: 480px) {
     .nav-inner {
-        padding: 1rem 1.2rem;
+        padding: 0.75rem 1rem;
     }
 
     .section,
     .hero {
-        padding-left: 1.2rem;
-        padding-right: 1.2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .hero {
+        padding-top: 5rem;
+    }
+
+    .eyebrow {
+        font-size: 0.65rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        align-items: center;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 8vw, 2.4rem);
+        margin: 0.5rem 0 0.8rem;
+    }
+
+    .hero-lead {
+        font-size: 0.95rem;
     }
 
     .hero-image {
-        max-height: 300px;
+        max-height: 260px;
+    }
+
+    .hero-card-body {
+        padding: 1.2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        margin-top: 2rem;
+    }
+
+    .stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.2rem;
+    }
+
+    .stat-value {
+        font-size: 1.6rem;
+    }
+
+    .process-grid,
+    .projects-grid,
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-body {
+        padding: 1.2rem;
+    }
+
+    .about-card,
+    .process-card,
+    .skill-group,
+    .contact-card {
+        padding: 1.2rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .button {
+        flex: unset;
+        width: 100%;
+    }
+
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.7rem;
+    }
+
+    .tag {
+        font-size: 0.72rem;
+        padding: 0.28rem 0.65rem;
     }
 
     .chat-widget {
-        right: 1rem;
-        left: 1rem;
+        right: 0.75rem;
+        left: 0.75rem;
         width: auto;
         bottom: 5rem;
+        max-height: 80vh;
+        padding: 1rem;
     }
 
     .chat-launcher {
         right: 1rem;
         bottom: 1rem;
+        width: 56px;
+        height: 56px;
+    }
+
+    .chat-launcher svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .footer {
+        padding: 1.5rem 1rem 2.5rem;
+        font-size: 0.85rem;
     }
 }
 
