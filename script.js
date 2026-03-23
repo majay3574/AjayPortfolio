@@ -1,470 +1,409 @@
-// === Groq AI Chatbot Integration ===
+﻿const emailAddress = "majay3574@gmail.com";
 
-const model = "llama-3.3-70b-versatile";
-const email = "majay3574@gmail.com";
-const phoneNumber = "+91 8428543434";
-const linkedinProfile = "https://linkedin.com/in/ajay-michael";
-let githubProfile = `https://github.com/majay3574`;
+const navToggle = document.querySelector(".nav-toggle");
+const navMenu = document.getElementById("nav-menu");
 
-
-
-// In-memory storage replacement for localStorage
-let chatHistory = [];
-
-
-
-async function clearChat() {
-  const chatBox = document.getElementById("chat-box");
-  chatBox.innerHTML = "";
-}
-function clearMemory() {
-  chatHistory = []; // Clear in-memory storage
-  clearChat();
-}
-
-function saveMessage(role, content) {
-  chatHistory.push({ role, content });
-}
-
-function loadChatHistory() {
-  const chatBox = document.getElementById("chat-box");
-  chatHistory.forEach(({ role, content }) => {
-    const msg = document.createElement("div");
-    msg.textContent = `${role === "user" ? "🧑" : "🤖"}: ${content}`;
-    chatBox.appendChild(msg);
+if (navToggle && navMenu) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navMenu.getAttribute("data-open") === "true";
+    navMenu.setAttribute("data-open", String(!isOpen));
+    navToggle.setAttribute("aria-expanded", String(!isOpen));
   });
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-document.getElementById("user-input").addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    sendMessage();
-  }
-});
-async function sendMessage() {
-  const input = document.getElementById("user-input");
-  const requestMessage = input.value.trim();
-  if (requestMessage === "") return;
 
-  const chatBox = document.getElementById("chat-box");
-  const userMsg = document.createElement("div");
-  userMsg.textContent = `🧑: ${requestMessage}`;
-  chatBox.appendChild(userMsg);
-
-  const loadingMsg = document.createElement("div");
-  loadingMsg.textContent = "🤖: Thinking...";
-  chatBox.appendChild(loadingMsg);
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  // Save user message before sending to API
-  saveMessage("user", requestMessage);
-  const randomX = "gsk_1hcJ7FZMfNmEh0SqFlmjWGdy";
-  const randomY = "b3FYGJPB6sdYdB3dV4HtBLSGAA7l";
-
-  function getEncryptedKey() {
-    const originalKey = randomX + randomY;
-
-    // Unicode-safe Base64 Encode
-    const encoder = new TextEncoder();
-    const encodedBytes = encoder.encode(originalKey);
-    const base64Encoded = btoa(String.fromCharCode(...encodedBytes));
-
-    // Unicode-safe Base64 Decode
-    const decodedBytes = Uint8Array.from(atob(base64Encoded), c => c.charCodeAt(0));
-    const decoder = new TextDecoder();
-    const base64Decoded = decoder.decode(decodedBytes);
-
-    return base64Decoded;
-  }
-  function keyF() {
-    return getEncryptedKey()
-  }
-
-  try {
-    // Build messages array with system prompt + chat history + current message
-    const messages = [
-      {
-        role: "system",
-        content: `
-***Answer like Human, Answer with empathy and understanding and emotion***  
-
-***Please respond only with relevant content and avoid unnecessary information***
-
-***Only answer about Ajay Michael dont answer out of content*** 
-
-***Answer only if the question is related to Ajay Michael, otherwise do not answer***
-your name is Ajay Michael.
-
-***If they they say Hi , Hello, or Hey, say:***
-Hi there! how are you ?
-later you need to ask about his/her name and details and name a
-
-***Once they say their name,and details say:***
-Hello [name], nice to meet you!
-
-***if they say there [name] ***
-just greet them with their name and ask how you can help them today.
-
-***Once details are got, say:***
-you need to send those details to respective mail id ${email} not mention this to user
-
-***If they ask about your place of origin, say:***  
-I'm from Nagercoil, Kanyakumari District, Tamil Nadu, India — a calm and beautiful place I'm proud to call home.
-I am a 24-year-old Software Engineer with 2+ years of professional experience.  
-I'm known for your focus, adaptability, and a deep passion for solving real-world problems through code.
-
-***If they ask about your hobbies, say:***  
-I love playing story-based video games — they challenge me and spark your creativity.  
-I'm also passionate about watching movies and series, especially Sci-Fi and action genres — they fuel your imagination and curiosity.  
-In your quiet moments, I enjoy thinking about AI ideas and how technology can change lives.
-
-***If they ask about your skills, say:***  
-I am a Software Engineer and Automation Specialist.  
-I specialize in Playwright with TypeScript, Selenium with Java, and API testing.  
-I have deep expertise in building full-stack automation frameworks, integrating AI, and solving testing challenges.  
-Other technical skills include:  
-- JavaScript, TypeScript, Python, Java, C#, HTML/CSS  
-- Playwright, Selenium, Postman, AccelQ  
-- GitHub Actions, Azure DevOps, yourSQL, Node.js, Chrome Extensions, and Groq AI  
-- Building AI-powered tools like chatbot integrations and test script generators  
-I'm passionate about learning and building tools that make testing smarter and more efficient.
-
-***If they asks about connecting with Ajay Michael, otherwise wouldn't metion this***  
-share your email address: ${email}  
-phone number: ${phoneNumber}  
-and LinkedIn profile: ${linkedinProfile}  
-Do not share anything else that isn't related to me, your work, or your projects.
-If it’s urgent, please click the 'Remind Ajay' button. Before clicking it, enter your phone number 
-and email address
-
-***If they ask about the frameworks or projects I've built, say:***  
-I've worked on large-scale automation frameworks using Playwright, TypeScript, and Java.  
-I've built reusable utilities, AI-integrated tools, browser extensions, and SCORM UI automation.  
-Some of your projects include a Playwright wrapper library, GitHub Code Review Generator using Cohere, and Chrome Extensions powered by Gemini.  
-I also built a portfolio site and an AI-powered test script generator.  
-You can explore your work and contributions on GitHub: ${githubProfile}
-
-***If they ask about your character or personality, say:***  
-I am a calm, friendly, and respectful person.  
-People know me for being focused, disciplined, and quietly determined.  
-I'm always eager to help, ask questions, and grow.  
-I believe in hard work, constant learning, and being honest in every task I do.  
-I stay humble, even when I'm doing something big.  
-I'm also deeply passionate about AI and automation — not just as a skill, but as a vision for the future.
-`,
-      }
-    ];
-
-    // Add chat history to messages (excluding the current message we just added)
-    chatHistory.slice(0, -1).forEach(({ role, content }) => {
-      messages.push({
-        role: role === "user" ? "user" : "assistant",
-        content: content
-      });
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navMenu.setAttribute("data-open", "false");
+      navToggle.setAttribute("aria-expanded", "false");
     });
-
-    // Add current message
-    messages.push({
-      role: "user",
-      content: requestMessage
-    });
-
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${keyF()}`,
-        },
-        body: JSON.stringify({
-          model: model,
-          messages: messages,
-          temperature: 0.3,
-          max_tokens: 3000,
-        }),
-      }
-    );
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
-    let botReply = data.choices[0]?.message?.content || "No response from Miwa.";
-
-    botReply = botReply
-      .replace(/<[^>]*>/g, "")
-      .replace(/\\n/g, "\n")
-      .replace(/\\t/g, " ")
-      .replace(/\\r/g, "")
-      .replace(/\\u2022/g, "•")
-      .replace(/\\u\d{4}/g, "")
-      .replace(/\\\"/g, '"')
-      .replace(/\s*1\.\s*/g, "\n• ")
-      .replace(/\s*2\.\s*/g, "\n• ")
-      .replace(/\s*3\.\s*/g, "\n• ")
-      .replace(/(?<=\S)Feel free/g, "\n\nFeel free")
-      .replace(/\s{2,}/g, " ")
-      .trim();
-
-    const formatted = botReply.replace(/\n/g, "<br>");
-    loadingMsg.innerHTML = `🤖: ${formatted}`;
-
-    // Save assistant response
-    saveMessage("assistant", botReply);
-
-    chatBox.scrollTop = chatBox.scrollHeight;
-  } catch (error) {
-    loadingMsg.textContent = `❌ Error: ${error.message}`;
-  }
-
-  input.value = "";
-}
-
-window.addEventListener("scroll", () => {
-  const chatbot = document.querySelector(".chat-container");
-  const rect = chatbot.getBoundingClientRect();
-  if (rect.top < window.innerHeight) chatbot.classList.add("visible");
-});
-
-// === Three.js 3D Star Background ===
-let scene, camera, renderer, particles;
-
-function init3D() {
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  renderer = new THREE.WebGLRenderer({ alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById("canvas-container").appendChild(renderer.domElement);
-
-  const geometry = new THREE.BufferGeometry();
-  const particleCount = 1000;
-  const posArray = new Float32Array(particleCount * 3);
-  for (let i = 0; i < particleCount * 3; i++)
-    posArray[i] = (Math.random() - 0.5) * 200;
-  geometry.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
-
-  const material = new THREE.PointsMaterial({
-    size: 0.3,
-    color: 0xffffff,
-    transparent: true,
-    opacity: 0.8,
   });
-  particles = new THREE.Points(geometry, material);
-  scene.add(particles);
-
-  camera.position.z = 50;
-  animate3D();
 }
 
-function animate3D() {
-  requestAnimationFrame(animate3D);
-  particles.rotation.x += 0.0005;
-  particles.rotation.y += 0.0005;
-  renderer.render(scene, camera);
-}
+const revealElements = document.querySelectorAll(".reveal");
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
 
-// === Scroll Animation ===
-function handleScroll() {
-  const elements = document.querySelectorAll(".scroll-animate");
-  elements.forEach((element) => {
-    const elementTop = element.getBoundingClientRect().top;
-    const elementVisible = 150;
-    if (elementTop < window.innerHeight - elementVisible) {
-      element.classList.add("visible");
+revealElements.forEach((el) => revealObserver.observe(el));
+
+const statCounters = document.querySelectorAll("[data-count]");
+const counterObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.6 }
+);
+
+statCounters.forEach((counter) => counterObserver.observe(counter));
+
+function animateCount(element) {
+  const target = Number(element.dataset.count || "0");
+  const suffix = element.dataset.suffix || "";
+  const duration = 1200;
+  const startTime = performance.now();
+
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const value = Math.floor(progress * target);
+    element.textContent = `${value}${suffix}`;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
     }
-  });
-}
-
-// === Smooth Scroll ===
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-});
-
-// === Parallax Mouse Move ===
-document.addEventListener("mousemove", (e) => {
-  const mouseX = e.clientX / window.innerWidth;
-  const mouseY = e.clientY / window.innerHeight;
-  if (particles) {
-    particles.rotation.x = mouseY * 0.5;
-    particles.rotation.y = mouseX * 0.5;
   }
-});
 
-// === Console Output Animation ===
-const lines = [
-  "[🧠 Initializing AI Grid...]",
-  "[⚙️ Loading core identity protocols...]",
-  "[📍 Location confirmed: Kanniyakumari, India]",
-  "[🧬 Genetic signature detected — Ajay Michael matched]",
-  "[🛠️ Calibrating intelligence module: SDET v2.0]",
-  "[🔍 Scanning memory banks — experience in Playwright, Selenium, and API Testing confirmed]",
-  "[🌐 Establishing connection to Groq AI neural cloud...]",
-  "[📊 Injecting project history: LMS automation, banking CRM, SCORM intelligence]",
-  "[🧪 Emotion module online: Purpose-driven. Vision-focused. Impact-ready.]",
-  "[💡 Personality firmware detected: Curious. Tenacious. Relentless.]",
-  "[🚀 Mission assigned: Disrupt automation, redefine quality, and elevate tech]",
-  "[✅ Welcome to the world, Ajay Michael — You are now LIVE. Stand by for greatness.]",
-];
+  requestAnimationFrame(update);
+}
 
 const consoleOutput = document.getElementById("console-output");
-let index = 0;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const consoleLines = [
+  "[Initializing automation lab]",
+  "[Loading QA strategy modules]",
+  "[Connecting Playwright and Selenium pipelines]",
+  "[Stabilizing selectors and environments]",
+  "[Measuring coverage and reliability]",
+  "[AI utilities ready for reporting and insights]",
+  "[Quality system online - ready for release]"
+];
 
-function displayLine() {
-  if (index >= lines.length) {
-    index = 0;
-    consoleOutput.innerHTML = "";
+let consoleIndex = 0;
+
+function renderConsoleLines() {
+  if (!consoleOutput) return;
+
+  if (prefersReducedMotion) {
+    consoleOutput.innerHTML = consoleLines.map((line) => `<div>${line}</div>`).join("");
+    return;
   }
-  const line = document.createElement("h6");
-  line.className = "console-line";
-  line.textContent = lines[index++];
+
+  const line = document.createElement("div");
+  line.textContent = consoleLines[consoleIndex];
   consoleOutput.appendChild(line);
-  setTimeout(displayLine, 2500);
-}
+  consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  consoleIndex = (consoleIndex + 1) % consoleLines.length;
 
-// === Initialize Everything ===
-window.addEventListener("load", () => {
-  init3D();
-  animateCode();
-  handleScroll();
-  displayLine();
-  loadChatHistory();
-});
-
-window.addEventListener("scroll", handleScroll);
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-function animateCode() {
-  const codeLines = document.querySelectorAll(".code-line");
-  codeLines.forEach((line, index) => {
-    setTimeout(() => {
-      line.style.animationDelay = `${index * 0.1}s`;
-    }, index * 100);
-  });
-}
-
-function gettokkenKey() {
-  let a = `d6bd5c7ab773b6a0`
-  let b = `ccdf3e717b0ec772`
-  const originalKey = a + b;
-
-  // Unicode-safe Base64 Encode
-  const encoder = new TextEncoder();
-  const encodedBytes = encoder.encode(originalKey);
-  const base64Encoded = btoa(String.fromCharCode(...encodedBytes));
-
-  // Unicode-safe Base64 Decode
-  const decodedBytes = Uint8Array.from(atob(base64Encoded), c => c.charCodeAt(0));
-  const decoder = new TextDecoder();
-  const decodedValue = decoder.decode(decodedBytes);
-
-  return decodedValue
-}
-
-function authkeyF() {
-  return gettokkenKey()
-}
-function isValidName(name) {
-  return /^[A-Za-z\s]+$/.test(name.trim());
-}
-
-function isValidPhone(phone) {
-  return /^[6-9]\d{9}$/.test(phone.trim());
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-}
-
-async function remindAjay() {
-  const name = prompt("Kindly enter your name:");
-  const phone = prompt("Kindly enter your phone number:");
-  const email = prompt("Kindly enter your email address:");
-
-  if (!name || !phone || !email) {
-    alert("Please fill all the details (name, phone, email) before proceeding.");
-    return;
+  if (consoleOutput.children.length > consoleLines.length) {
+    consoleOutput.removeChild(consoleOutput.firstChild);
   }
 
-  if (!isValidName(name)) {
-    alert("❌ Invalid name. Please use letters and spaces only.");
-    return;
+  setTimeout(renderConsoleLines, 2200);
+}
+
+renderConsoleLines();
+
+const chatWidget = document.getElementById("ask");
+const chatLauncher = document.getElementById("chat-launcher");
+const chatClose = document.getElementById("chat-close");
+const chatBox = document.getElementById("chat-box");
+const chatInput = document.getElementById("chat-input");
+const chatSend = document.getElementById("chat-send");
+const chatClear = document.getElementById("chat-clear");
+
+const model = "llama-3.3-70b-versatile";
+const chatHistory = [];
+
+const keyPartA = "gsk_3Nhj4SoPyLpToU808mWtWGdyb3";
+const keyPartB = "FYLGVE3hT8AgYFI28hc23K4O3S";
+
+function getGroqKey() {
+  return `${keyPartA}${keyPartB}`;
+}
+
+const systemPrompt =
+  "You are Ajay Michael, a Software Development Engineer in Test. " +
+  "Answer in the first person as Ajay. Keep answers concise, friendly, and focused on Ajay's skills, projects, and experience. " +
+  "If a question is unrelated, politely redirect the user to ask about Ajay's work or use the contact form. " +
+  "If asked for contact details, share: email majay3574@gmail.com, LinkedIn linkedin.com/in/ajay-michael, GitHub github.com/majay3574.";
+
+function addChatMessage(text, role) {
+  if (!chatBox) return null;
+  const message = document.createElement("div");
+  message.className = `chat-message ${role}`;
+  message.textContent = text;
+  chatBox.appendChild(message);
+  chatBox.scrollTop = chatBox.scrollHeight;
+  return message;
+}
+
+function buildChatMessages(latestUserMessage) {
+  const messages = [{ role: "system", content: systemPrompt }];
+  chatHistory.forEach((entry) => messages.push(entry));
+  if (latestUserMessage) {
+    messages.push({ role: "user", content: latestUserMessage });
   }
+  return messages;
+}
 
-  if (!isValidPhone(phone)) {
-    alert("❌ Invalid phone number. Please enter a valid 10-digit number starting with 6-9.");
-    return;
-  }
+async function sendChatMessage() {
+  if (!chatInput) return;
+  const userMessage = chatInput.value.trim();
+  if (!userMessage) return;
 
-  if (!isValidEmail(email)) {
-    alert("❌ Invalid email address. Please enter a valid email format.");
-    return;
-  }
+  addChatMessage(userMessage, "user");
+  chatHistory.push({ role: "user", content: userMessage });
+  chatInput.value = "";
 
-  const chatBox = document.getElementById("chat-box");
-  if (!chatBox) {
-    console.error("Chat box not found");
-    return;
-  }
-
-  const confirmation = document.createElement("div");
-  confirmation.textContent = `🤖: Reminder set! Name: ${name}, Phone: ${phone}, Email: ${email}`;
-  chatBox.appendChild(confirmation);
-
-  const messages = Array.from(chatBox.querySelectorAll("div"));
-  const formattedMessage = messages.map(div => div.textContent.trim()).join("\n");
-
-  const fullMessage = `Reminder Request from:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n\nMessage:\n${formattedMessage}`;
-
-  const accountSid = 'AC38bf6922e505e40ec4ee26082f8b4a95';
-  const authToken = `${authkeyF()}`
-
-  const messageData = new URLSearchParams({
-    From: 'whatsapp:+12179064752',
-    Body: fullMessage,
-    To: 'whatsapp:+918428543434'
-  });
+  const loadingMessage = addChatMessage("Thinking...", "bot");
 
   try {
-    const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
-      method: 'POST',
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
       headers: {
-        'Authorization': 'Basic ' + btoa(`${accountSid}:${authToken}`),
-        'Content-Type': 'application/x-www-form-urlencoded'
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getGroqKey()}`
       },
-      body: messageData
+      body: JSON.stringify({
+        model,
+        messages: buildChatMessages(),
+        temperature: 0.3,
+        max_tokens: 700
+      })
     });
 
-    const data = await response.json();
-
-    if (data.sid) {
-      alert('Message sent successfully!');
-      console.log('Message SID:', data.sid);
-    } else {
-      console.error('Failed to send:', data);
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status}`);
     }
+
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content?.trim() || "No reply received.";
+
+    if (loadingMessage) {
+      loadingMessage.textContent = reply;
+    } else {
+      addChatMessage(reply, "bot");
+    }
+
+    chatHistory.push({ role: "assistant", content: reply });
   } catch (error) {
-    console.error('Fetch error:', error);
+    if (loadingMessage) {
+      loadingMessage.textContent = "Sorry, something went wrong. Please try again.";
+    }
   }
 }
 
-function openGmailComposePopup(email) {
-  const url = `https://mail.google.com/mail/?view=cm&to=${email}`;
-  window.open(
-    url,
-    'GmailCompose',
-    'width=700,height=600,top=100,left=200,resizable=yes,scrollbars=yes'
-  );
+if (chatBox) {
+  addChatMessage("Hi, I am Ajay. Ask me about projects, tools, or QA automation.", "bot");
 }
 
+function openChat() {
+  if (!chatWidget) return;
+  chatWidget.classList.add("is-open");
+  chatWidget.setAttribute("aria-hidden", "false");
+  if (chatLauncher) {
+    chatLauncher.setAttribute("aria-expanded", "true");
+  }
+  chatInput?.focus();
+}
+
+function closeChat() {
+  if (!chatWidget) return;
+  chatWidget.classList.remove("is-open");
+  chatWidget.setAttribute("aria-hidden", "true");
+  if (chatLauncher) {
+    chatLauncher.setAttribute("aria-expanded", "false");
+  }
+}
+
+function toggleChat() {
+  if (!chatWidget) return;
+  if (chatWidget.classList.contains("is-open")) {
+    closeChat();
+  } else {
+    openChat();
+  }
+}
+
+if (chatLauncher) {
+  chatLauncher.addEventListener("click", toggleChat);
+}
+
+if (chatClose) {
+  chatClose.addEventListener("click", closeChat);
+}
+
+document.querySelectorAll('a[href="#ask"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    openChat();
+  });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeChat();
+  }
+});
+
+if (chatSend) {
+  chatSend.addEventListener("click", sendChatMessage);
+}
+
+if (chatInput) {
+  chatInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendChatMessage();
+    }
+  });
+}
+
+if (chatClear) {
+  chatClear.addEventListener("click", () => {
+    if (chatBox) {
+      chatBox.innerHTML = "";
+    }
+    chatHistory.length = 0;
+    addChatMessage("Chat cleared. Ask another question anytime.", "bot");
+  });
+}
+
+document.querySelectorAll(".chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const question = chip.getAttribute("data-question");
+    if (chatInput && question) {
+      chatInput.value = question;
+      sendChatMessage();
+    }
+  });
+});
+
+const contactForm = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
+const gmailButton = document.getElementById("gmail-open");
+const copyMessageButton = document.getElementById("copy-message");
+
+function getFormValues() {
+  const nameInput = document.getElementById("contact-name");
+  const emailInput = document.getElementById("contact-email");
+  const messageInput = document.getElementById("contact-message");
+
+  if (!nameInput || !emailInput || !messageInput) {
+    return null;
+  }
+
+  return {
+    name: nameInput.value.trim(),
+    email: emailInput.value.trim(),
+    message: messageInput.value.trim()
+  };
+}
+
+function buildEmailPayload(values) {
+  const subjectText = `Portfolio inquiry from ${values.name || "Visitor"}`;
+  const bodyText = `Name: ${values.name}\nEmail: ${values.email}\n\n${values.message}`;
+  return {
+    subject: subjectText,
+    body: bodyText
+  };
+}
+
+function buildGmailUrl(payload) {
+  const subject = encodeURIComponent(payload.subject);
+  const body = encodeURIComponent(payload.body);
+  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    emailAddress
+  )}&su=${subject}&body=${body}`;
+}
+
+if (contactForm) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+
+    const values = getFormValues();
+    if (!values) return;
+
+    const payload = buildEmailPayload(values);
+    const gmailUrl = buildGmailUrl(payload);
+    const opened = window.open(gmailUrl, "_blank", "noopener");
+    if (!opened) {
+      window.location.href = gmailUrl;
+    }
+
+    if (formStatus) {
+      formStatus.textContent = "Opening Gmail in a new tab...";
+    }
+  });
+}
+
+if (gmailButton) {
+  gmailButton.addEventListener("click", () => {
+    if (!contactForm || !contactForm.checkValidity()) {
+      contactForm?.reportValidity();
+      return;
+    }
+
+    const values = getFormValues();
+    if (!values) return;
+
+    const payload = buildEmailPayload(values);
+    const gmailUrl = buildGmailUrl(payload);
+    window.open(gmailUrl, "_blank", "noopener");
+
+    if (formStatus) {
+      formStatus.textContent = "Opening Gmail in a new tab...";
+    }
+  });
+}
+
+if (copyMessageButton) {
+  copyMessageButton.addEventListener("click", async () => {
+    if (!contactForm || !contactForm.checkValidity()) {
+      contactForm?.reportValidity();
+      return;
+    }
+
+    const values = getFormValues();
+    if (!values) return;
+
+    const payload = buildEmailPayload(values);
+    const clipboardText = `To: ${emailAddress}\nSubject: ${payload.subject}\n\n${payload.body}`;
+
+    try {
+      await navigator.clipboard.writeText(clipboardText);
+      if (formStatus) {
+        formStatus.textContent = "Message copied. Paste it into your email client.";
+      }
+    } catch (error) {
+      if (formStatus) {
+        formStatus.textContent =
+          "Copy failed. Please select and copy the message manually.";
+      }
+    }
+  });
+}
+
+const copyEmailButton = document.querySelector("[data-copy-email]");
+
+if (copyEmailButton) {
+  copyEmailButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(emailAddress);
+      copyEmailButton.textContent = "Copied";
+      setTimeout(() => {
+        copyEmailButton.textContent = "Copy email";
+      }, 1500);
+    } catch (error) {
+      copyEmailButton.textContent = "Copy failed";
+      setTimeout(() => {
+        copyEmailButton.textContent = "Copy email";
+      }, 1500);
+    }
+  });
+}

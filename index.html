@@ -1,258 +1,411 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajay Michael - Professional Portfolio</title>
+    <title>Ajay Michael | Developer + QA Portfolio</title>
+    <meta name="description"
+        content="Ajay Michael is a Developer and QA Engineer specializing in Playwright, Selenium, API testing, and AI assisted automation.">
+    <meta name="theme-color" content="#d46a1f">
+    <meta property="og:title" content="Ajay Michael | Developer + QA Portfolio">
+    <meta property="og:description"
+        content="Automation engineer focused on scalable test frameworks, API quality, and AI assisted QA workflows.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="img1.png">
+    <meta property="og:url" content="https://your-domain.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="img1.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <div id="canvas-container"></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="ambient" aria-hidden="true"></div>
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-content">
-            <div class="logo">AJAY MICHAEL S</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#hoveronhere">Chat with Michael</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+    <header class="site-header">
+        <nav class="nav" aria-label="Primary">
+            <div class="nav-inner">
+                <a class="brand" href="#home">Ajay Michael</a>
+                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+                <ul class="nav-links" id="nav-menu" data-open="false">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#process">Process</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#ask">Chat</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-
-        <div class="hero-content">
-            <h1 class="hero-title" style="background-image: url('./img2.jpg');">Ajay Michael</h1>
-            <p class="hero-subtitle">Software Development Engineer in Test</p>
-            <p class="hero-description">
-                Passionate SDET | Elevating Software Quality Through Automation & Innovation
-                Results-driven QA engineer with 2+ years of experience in Selenium (Java), Playwright (TypeScript), and
-                API testing. I specialize in building scalable automation frameworks, integrating seamlessly in Agile
-                teams, and accelerating quality delivery across the SDLC. Skilled in both code-based and codeless tools
-                like AccelQ, I’m a lifelong learner and quality advocate committed to driving precision, speed, and
-                innovation in every test I write.
-            </p>
-            <a href="#about" class="cta-button" style="background-image: url('./img2.jpg');">Explore My Work</a>
-        </div>
-    </section>
-
-    <section>
-        <div id="chat">
-            <div class="chat-container">
-                <div id="hoveronhere">
-                    <h2 class="bg-text">Chat with Michael</h2><br>
-                    <div class="input-area">
-                        <input type="text" id="user-input" placeholder="Ask Questions to Michael" />
-                        <button onclick="sendMessage()" style="background-image: url('./img2.jpg');">Send</button>
-                        <button onclick="clearChat()" style="background-image: url('./img2.jpg');">Clear</button>
-                        <button onclick="remindAjay()" style="background-image: url('./img2.jpg');">Remind Ajay</button>
+    <main id="main">
+        <section id="home" class="hero">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">
+                        <span class="eyebrow-highlight">Developer + QA</span>
+                        <span class="eyebrow-divider">·</span>
+                        <span class="eyebrow-highlight eyebrow-highlight--teal">AI for Development</span>
+                        <span class="eyebrow-divider">·</span>
+                        Automation · SDET
+                    </p>
+                    <h1 class="hero-title">I build software <em>and</em> make sure it never breaks in production.</h1>
+                    <p class="hero-lead">Developer by craft, QA engineer by discipline. I ship features, design test
+                        automation frameworks, and use AI to accelerate both — so teams move fast without breaking
+                        things.
+                    </p>
+                    <div class="cta-row">
+                        <a class="button primary" href="#projects">View projects</a>
+                        <a class="button ghost" href="#contact">Get in touch</a>
+                    </div>
+                    <div class="hero-meta">
+                        <span class="status-badge">Open to SDET and QA automation roles</span>
+                        <div class="tag-row">
+                            <span class="tag">Playwright</span>
+                            <span class="tag">Selenium</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">API testing</span>
+                        </div>
                     </div>
                 </div>
-                <div id="chat-box" class="chat-box"></div>
-                <div class="chat-header">
-
+                <div class="hero-card">
+                    <img src="./img1.png" alt="Ajay Michael portrait" class="hero-image" loading="eager">
+                    <div class="hero-card-body">
+                        <p class="card-title">At a glance</p>
+                        <ul class="quick-facts">
+                            <li>3+ years in automation and QA engineering</li>
+                            <li>Frameworks for e-commerce, LMS, and CRM flows</li>
+                            <li>AI assisted tooling for selectors and reporting</li>
+                            <li>Based in Chennai, India</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="section scroll-animate">
-        <h2 class="section-title" style="background-image: url('./img2.jpg');">About Me</h2>
-        <div class="about-grid">
-            <div class="about-text">
-                <p>
-                <h5 class="about-description">
-                    🚀 I’m Ajay Michael, a passionate SDET specializing in Playwright with TypeScript,
-                    where I craft robust, scalable test automation frameworks that streamline end-to-end testing.
-                    With over 2 years of experience, I’ve mastered tools like Selenium (Java), Postman, and AccelQ,
-                    but my true edge comes from blending AI with automation.<br>
-
-                    🎭 I’m actively building AI-powered tools that generate Playwright scripts, auto-detect stable
-                    selectors, and enhance test reporting with smart insights. By leveraging GenAI (like Gemini API and
-                    OpenAI), I eliminate repetitive work and empower QA teams to test smarter and faster.<br>
-
-                    🤝 I thrive in Agile environments, collaborate closely with dev teams, and believe in quality-first
-                    development. From building Chrome extensions to crafting intelligent CI/CD pipelines, my mission is
-                    clear: deliver flawless user experiences through intelligent test engineering.<br>
-                </h5>
-                </p>
-            </div>
-            <div class="about-visual">
-                <div class="ai-console" id="console-output"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section scroll-animate">
-        <h2 class="section-title" style="background-image: url('./img2.jpg');">Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon" style="background-image: url('./img2.jpg');">PW</div>
-                <h3 class="skill-title">Playwright</h3>
-                <p class="skill-description">Advanced E2E testing, cross-browser automation, API testing, and visual
-                    regression testing</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon" style="background-image: url('./img2.jpg');">SE</div>
-                <h3 class="skill-title">Selenium</h3>
-                <p class="skill-description">Web automation, grid setup, parallel execution, and legacy browser support
-                </p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon" style="background-image: url('./img2.jpg');">JS</div>
-                <h3 class="skill-title">JavaScript/TypeScript</h3>
-                <p class="skill-description">Test framework development, async/await patterns, and modern ES6+ features
-                </p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon" style="background-image: url('./img2.jpg');">PY</div>
-                <h3 class="skill-title">Python</h3>
-                <p class="skill-description">Test automation, data analysis, pytest framework, and API testing</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon" style="background-image: url('./img2.jpg');">API</div>
-                <h3 class="skill-title">API Testing</h3>
-                <p class="skill-description">REST/GraphQL validation, Postman, Newman, and contract testing</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon" style="background-image: url('./img2.jpg');">CI</div>
-                <h3 class="skill-title">CI/CD</h3>
-                <p class="skill-description">Jenkins, GitHub Actions, pipeline, test reporting, and pipeline automation
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section scroll-animate">
-        <h2 class="section-title" style="background-image: url('./img2.jpg');">Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h3 class="project-title">E-commerce Test Suite</h3>
-                <p class="project-description">Comprehensive Playwright-based testing framework covering user journeys,
-                    payment flows, and inventory management with 95% test coverage.</p>
-                <div class="project-tech">
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">Playwright</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">TypeScript</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">pipeline</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">CI/CD</span>
+            <div class="stats-grid">
+                <div class="stat reveal">
+                    <p class="stat-value" data-count="3" data-suffix="+ yrs">0</p>
+                    <p class="stat-label">Automation experience</p>
+                </div>
+                <div class="stat reveal">
+                    <p class="stat-value" data-count="95" data-suffix="%">0</p>
+                    <p class="stat-label">Coverage on critical flows</p>
+                </div>
+                <div class="stat reveal">
+                    <p class="stat-value" data-count="70" data-suffix="%">0</p>
+                    <p class="stat-label">Faster regression cycles</p>
                 </div>
             </div>
-            <div class="project-card">
-                <h3 class="project-title">API Testing Framework</h3>
-                <p class="project-description">Scalable API testing solution with data-driven testing, environment
-                    management, and detailed reporting, reducing testing time by 70%.</p>
-                <div class="project-tech">
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">JavaScript</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">REST API</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">Newman</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">Postman</span>
+        </section>
+
+        <section id="about" class="section reveal">
+            <div class="section-head">
+                <p class="section-kicker">About</p>
+                <h2>Automation with a product mindset</h2>
+                <p class="section-lead">I work with QA and engineering teams to design test strategies that scale. I care
+                    about stable selectors, readable reports, and fast feedback in CI.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>What I focus on</h3>
+                    <ul class="list">
+                        <li>End to end flows that match real user journeys</li>
+                        <li>API coverage that catches issues before UI tests run</li>
+                        <li>Smart test data and clean environments</li>
+                        <li>AI assisted utilities that remove repetitive work</li>
+                    </ul>
+                </div>
+                <div class="about-card console-card">
+                    <h3>Automation console</h3>
+                    <div class="ai-console" id="console-output" aria-live="polite"></div>
                 </div>
             </div>
-            <div class="project-card">
-                <h3 class="project-title">Cross-Browser Testing</h3>
-                <p class="project-description">Robust cross-browser testing infrastructure supporting Chrome, Firefox,
-                    Safari, and Edge with pipeline containerization.</p>
-                <div class="project-tech">
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">Selenium</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">pipeline</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">Python</span>
-                    <span class="tech-tag" style="background-image: url('./img2.jpg');">Grid</span>
+        </section>
+
+        <section id="process" class="section reveal">
+            <div class="section-head">
+                <p class="section-kicker">Process</p>
+                <h2>How I build reliable quality systems</h2>
+            </div>
+            <div class="process-grid">
+                <div class="process-card">
+                    <p class="step-number">01</p>
+                    <h3>Audit the risk</h3>
+                    <p>Map high impact user journeys and define what must never break.</p>
+                </div>
+                <div class="process-card">
+                    <p class="step-number">02</p>
+                    <h3>Design the framework</h3>
+                    <p>Set standards for structure, selectors, data, and reporting.</p>
+                </div>
+                <div class="process-card">
+                    <p class="step-number">03</p>
+                    <h3>Automate with intent</h3>
+                    <p>Build stable suites with clear ownership and fast feedback.</p>
+                </div>
+                <div class="process-card">
+                    <p class="step-number">04</p>
+                    <h3>Measure and improve</h3>
+                    <p>Track coverage, flakiness, and cycle time in CI.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section scroll-animate">
-        <style>
-            #contact a {
-                color: #ffffff;
-                /* White link text */
-                text-decoration: none;
-                /* No underline */
-            }
+        <section id="projects" class="section reveal">
+            <div class="section-head">
+                <p class="section-kicker">Projects</p>
+                <h2>Featured Development and Automation Work</h2>
+            </div>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <img src="./img2.jpg" alt="Nexus AI project preview" loading="lazy" class="project-image">
+                    <div class="project-body">
+                        <p class="project-type">Live product</p>
+                        <h3>Nexus AI</h3>
+                        <p>Production AI assistant project focused on practical automation and tooling.</p>
+                        <ul class="project-points">
+                            <li>Live deployment with a production URL</li>
+                            <li>Focused on AI assisted workflows</li>
+                            <li>Built for real users and feedback</li>
+                        </ul>
+                        <div class="tag-row">
+                            <span class="tag">AI</span>
+                            <span class="tag">Automation</span>
+                            <span class="tag">Production</span>
+                        </div>
+                        <div class="cta-row">
+                            <a class="button ghost" href="https://nexus-ai-il1c.onrender.com/" target="_blank"
+                                rel="noopener">View Live</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <img src="./img2.jpg" alt="E-commerce test suite preview" loading="lazy" class="project-image">
+                    <div class="project-body">
+                        <p class="project-type">E-commerce test suite</p>
+                        <h3>Playwright framework for checkout and inventory flows</h3>
+                        <p>Built a Playwright based suite covering search, cart, payment, and inventory updates with
+                            reliable data seeding.</p>
+                        <ul class="project-points">
+                            <li>Reached 95 percent coverage on critical purchase flows</li>
+                            <li>Integrated with CI for fast, parallel feedback</li>
+                            <li>Added visual checks for key screens</li>
+                        </ul>
+                        <div class="tag-row">
+                            <span class="tag">Playwright</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">CI</span>
+                            <span class="tag">Visual testing</span>
+                        </div>
+                    </div>
+                </article>
 
-            #contact a:hover {
-                color: #db6607;
-                /* Light blue on hover */
-                text-decoration: underline;
-                /* Optional: underline on hover */
-            }
-        </style>
-        <h2 class="section-title" style="background-image: url('./img2.jpg');">Get In Touch</h2>
+                <article class="project-card">
+                    <img src="./img2.jpg" alt="API testing framework preview" loading="lazy" class="project-image">
+                    <div class="project-body">
+                        <p class="project-type">API testing framework</p>
+                        <h3>Data driven coverage for REST services</h3>
+                        <p>Built an API suite with environment management, contract checks, and reporting to shorten
+                            regression cycles.</p>
+                        <ul class="project-points">
+                            <li>Reduced regression time by 70 percent</li>
+                            <li>Improved defect visibility with structured reports</li>
+                            <li>Standardized collections and utilities</li>
+                        </ul>
+                        <div class="tag-row">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Postman</span>
+                            <span class="tag">Newman</span>
+                            <span class="tag">REST</span>
+                        </div>
+                    </div>
+                </article>
 
-        <div class="contact-grid">
-            <!-- Left Column -->
-            <div class="contact-column">
-                <div class="contact-item">
-                    <div class="contact-icon" style="background-image: url('./img2.jpg');">📧</div>
-                    <div class="contact-text">
+                <article class="project-card">
+                    <img src="./img2.jpg" alt="Cross browser testing preview" loading="lazy" class="project-image">
+                    <div class="project-body">
+                        <p class="project-type">Cross browser testing</p>
+                        <h3>Scalable Selenium grid for legacy and modern browsers</h3>
+                        <p>Delivered stable cross browser coverage with containerized runners and parallel execution.</p>
+                        <ul class="project-points">
+                            <li>Supported Chrome, Firefox, Edge, and Safari</li>
+                            <li>Stabilized flaky tests with better selectors</li>
+                            <li>Pipeline ready reports for teams</li>
+                        </ul>
+                        <div class="tag-row">
+                            <span class="tag">Selenium</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Grid</span>
+                            <span class="tag">CI</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="skills" class="section reveal">
+            <div class="section-head">
+                <p class="section-kicker">Skills</p>
+                <h2>Tools and systems I work with</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <h3>Automation</h3>
+                    <p>Playwright, Selenium, AccelQ, visual testing, cross browser strategy.</p>
+                </div>
+                <div class="skill-group">
+                    <h3>Languages</h3>
+                    <p>TypeScript, JavaScript, Java, Python, C#.</p>
+                </div>
+                <div class="skill-group">
+                    <h3>API and data</h3>
+                    <p>Postman, Newman, REST validation, data seeding, contract checks.</p>
+                </div>
+                <div class="skill-group">
+                    <h3>DevOps</h3>
+                    <p>GitHub Actions, Jenkins, Azure DevOps, pipelines, reporting.</p>
+                </div>
+                <div class="skill-group">
+                    <h3>AI for QA</h3>
+                    <p>Selector detection, script generation, report summarization.</p>
+                </div>
+                <div class="skill-group">
+                    <h3>Collaboration</h3>
+                    <p>Agile delivery, QA strategy, test planning, mentoring.</p>
+                </div>
+            </div>
+
+            <div class="toolbox">
+                <span class="tag">Playwright</span>
+                <span class="tag">Selenium</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Postman</span>
+                <span class="tag">Newman</span>
+                <span class="tag">GitHub Actions</span>
+                <span class="tag">Azure DevOps</span>
+                <span class="tag">Jenkins</span>
+                <span class="tag">SQL</span>
+                <span class="tag">Node.js</span>
+            </div>
+        </section>
+
+        <section id="faq" class="section reveal">
+            <div class="section-head">
+                <p class="section-kicker">FAQ</p>
+                <h2>Common questions</h2>
+            </div>
+            <div class="faq-grid">
+                <details>
+                    <summary>What kind of roles are you looking for?</summary>
+                    <p>Software Development Engineer in Test, QA Automation Engineer, or Automation Consultant roles with
+                        a focus on Playwright and API quality.</p>
+                </details>
+                <details>
+                    <summary>Do you work with AI assisted testing?</summary>
+                    <p>Yes. I build helpers for script generation, selector stability, and report summaries to reduce
+                        manual effort.</p>
+                </details>
+                <details>
+                    <summary>Can you help improve an existing framework?</summary>
+                    <p>Absolutely. I focus on reliability, faster feedback, and clearer reporting without forcing a full
+                        rewrite.</p>
+                </details>
+            </div>
+        </section>
+
+        <section id="contact" class="section reveal">
+            <div class="section-head">
+                <p class="section-kicker">Contact</p>
+                <h2>Let's build reliable releases together</h2>
+            </div>
+            <div class="contact-grid">
+                <form id="contact-form" class="contact-form">
+                    <label>
+                        Name
+                        <input type="text" name="name" id="contact-name" required>
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" name="email" id="contact-email" required>
+                    </label>
+                    <label>
+                        Message
+                        <textarea name="message" id="contact-message" rows="5" required></textarea>
+                    </label>
+                    <div class="form-actions">
+                        <button class="button primary" type="submit">Send with Gmail</button>
+                        <button class="button ghost" type="button" id="gmail-open">Open Gmail</button>
+                        <button class="button ghost" type="button" id="copy-message">Copy message</button>
+                    </div>
+                    <p class="form-note" id="form-status">Send via email opens Gmail in a new tab.</p>
+                </form>
+
+                <div class="contact-cards">
+                    <div class="contact-card">
                         <h3>Email</h3>
-                        <p>
-                            <a href="#" onclick="openGmailComposePopup('majay3574@gmail.com')">
-                                majay3574@gmail.com
-                            </a>
-                        </p>
+                        <p><a href="mailto:majay3574@gmail.com">majay3574@gmail.com</a></p>
+                        <button class="button ghost" type="button" data-copy-email>Copy email</button>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon" style="background-image: url('./img2.jpg');">📍</div>
-                    <div class="contact-text">
+                    <div class="contact-card">
                         <h3>Location</h3>
                         <p>Chennai, Tamil Nadu, India</p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Right Column -->
-            <div class="contact-column">
-                <div class="contact-item">
-                    <div class="contact-icon" style="background-image: url('./img2.jpg');">💼</div>
-                    <div class="contact-text">
+                    <div class="contact-card">
                         <h3>LinkedIn</h3>
-                        <p>
-                            <a href="https://linkedin.com/in/ajay-michael" target="_blank">
-                                linkedin.com/in/ajay-michael
-                            </a>
-                        </p>
+                        <p><a href="https://linkedin.com/in/ajay-michael" target="_blank" rel="noopener">linkedin.com/in/ajay-michael</a></p>
                     </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon" style="background-image: url('./img2.jpg');">🐙</div>
-                    <div class="contact-text">
+                    <div class="contact-card">
                         <h3>GitHub</h3>
-                        <p>
-                            <a href="https://github.com/majay3574" target="_blank">
-                                github.com/majay3574
-                            </a>
-                        </p>
+                        <p><a href="https://github.com/majay3574" target="_blank" rel="noopener">github.com/majay3574</a></p>
                     </div>
                 </div>
             </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Designed and built by Ajay Michael. This portfolio is fully static for fast and reliable hosting.</p>
+    </footer>
+
+    <button class="chat-launcher" id="chat-launcher" type="button" aria-label="Open AI chatbot"
+        aria-controls="ask" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+                d="M7 3h10a2 2 0 0 1 2 2v2h1a1 1 0 1 1 0 2h-1v6h1a1 1 0 1 1 0 2h-1v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2H4a1 1 0 1 1 0-2h1V9H4a1 1 0 1 1 0-2h1V5a2 2 0 0 1 2-2zm0 4v10h10V7H7zm2 2h2v2H9V9zm4 0h2v2h-2V9z" />
+        </svg>
+    </button>
+
+    <div class="chat-widget" id="ask" role="dialog" aria-label="AI Chatbot" aria-hidden="true">
+        <div class="chat-header">
+            <div>
+                <p class="chat-title">AI Chatbot</p>
+                <p class="chat-subtitle">Ask about Ajay's work or automation skills.</p>
+            </div>
+            <button class="chat-close" id="chat-close" type="button" aria-label="Close chat">×</button>
         </div>
-    </section>
-
-
+        <div id="chat-box" class="chat-box" aria-live="polite"></div>
+        <div class="chat-input">
+            <input id="chat-input" type="text" placeholder="Ask about Playwright, API testing, or CI">
+            <button class="button primary" id="chat-send" type="button">Send</button>
+            <button class="button ghost" id="chat-clear" type="button">Clear</button>
+        </div>
+        <div class="chat-chips">
+            <button class="chip" data-question="What tools do you use the most?">Tools</button>
+            <button class="chip" data-question="Which project best shows your QA skills?">Projects</button>
+            <button class="chip" data-question="How do you reduce flaky tests?">Stability</button>
+            <button class="chip" data-question="Can you integrate with CI pipelines?">CI</button>
+        </div>
+        <p class="chat-note">Tip: be specific about the project or skill you want to discuss.</p>
+    </div>
 
     <script src="./script.js"></script>
 </body>
